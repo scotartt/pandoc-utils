@@ -93,16 +93,16 @@ $endif$
 \else
   \usepackage[unicode=true]{hyperref}
 \fi
-\hypersetup{breaklinks=true,
-            bookmarks=true,
-            pdfauthor={$author-meta$},
-            pdftitle={$title-meta$},
-            colorlinks=true,
-            citecolor=$if(citecolor)$$citecolor$$else$blue$endif$,
-            urlcolor=$if(urlcolor)$$urlcolor$$else$blue$endif$,
-            linkcolor=$if(linkcolor)$$linkcolor$$else$magenta$endif$,
-            pdfborder={0 0 0}}
-\urlstyle{same}  % don't use monospace font for urls
+% \hypersetup{breaklinks=true,
+%             bookmarks=true,
+%             pdfauthor={$author-meta$},
+%             pdftitle={$title-meta$},
+%             colorlinks=true,
+%             citecolor=$if(citecolor)$$citecolor$$else$blue$endif$,
+%             urlcolor=$if(urlcolor)$$urlcolor$$else$blue$endif$,
+%             linkcolor=$if(linkcolor)$$linkcolor$$else$magenta$endif$,
+%             pdfborder={0 0 0}}
+% \urlstyle{same}  % don't use monospace font for urls
 $if(links-as-notes)$
 % Make links footnotes instead of hotlinks:
 \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
@@ -153,8 +153,13 @@ $if(onehalfspacing)$
 $endif$
 
 \newenvironment{theendmatter}%
-{\SingleSpacing \setlength{\parskip}{1em}}%
+{\SingleSpacing \setlength{\parskip}{0.5em} \setlength{\parindent}{0em}}%
 {\setlength{\parskip}{0em}}
+
+$if(noparindent)$
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.5em}
+$endif$
 
 
 \begin{document}
