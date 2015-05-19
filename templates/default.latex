@@ -5,9 +5,13 @@
 \usepackage{xcolor}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
+\usepackage{fixltx2e} 
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+% csquotes provides configuration for quotes e.g. '' "" or guillemots etc
+\usepackage[style=british]{csquotes}
+
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[utf8]{inputenc}
 $if(euro)$
@@ -46,6 +50,7 @@ $if(natbib)$
 $endif$
 $if(biblatex)$
 \usepackage[backend=biber,sorting=nyt,citestyle=authoryear-comp,bibstyle=authoryear, firstinits=true]{biblatex}
+\renewbibmacro{in:}{}
 $if(biblio-files)$
 \bibliography{$biblio-files$}
 $endif$
