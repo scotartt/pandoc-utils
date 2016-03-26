@@ -8,10 +8,8 @@
 \usepackage{fixltx2e} 
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-
 % csquotes provides configuration for quotes e.g. '' "" or guillemots etc
 \usepackage[style=british]{csquotes}
-
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[utf8]{inputenc}
 $if(euro)$
@@ -27,7 +25,7 @@ $endif$
   \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
   \newcommand{\euro}{€}
 $if(mainfont)$
-    \setmainfont{$mainfont$}
+  \setmainfont{$mainfont$}
 $endif$
 $if(sansfont)$
     \setsansfont{$sansfont$}
@@ -44,32 +42,48 @@ $endif$
 $if(geometry)$
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $endif$
-$if(natbib)$
-\usepackage{natbib}
-\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
-$endif$
+% never use natbib, it's fucking shit
+% $if(natbib)$
+% \usepackage{natbib}
+% \bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
+% $endif$
+
 $if(biblatex)$
-\usepackage[backend=biber,sorting=nyt,citestyle=authoryear-comp,bibstyle=authoryear, firstinits=true]{biblatex}
+% \usepackage[backend=biber,sorting=nyt,style=philosophy-classic,firstinits=true,isbn=false,doi-false,url=false,eprint=false]{biblatex}
+\usepackage[backend=biber,sorting=nyt,citestyle=authoryear-comp, bibstyle=authoryear,firstinits=true,isbn=false,doi=false,url=false,eprint=false]{biblatex}
 \renewbibmacro{in:}{}
-$if(biblio-files)$
+\renewcommand*{\postnotedelim}{\addcolon\space}
+\DeclareFieldFormat{postnote}{#1}
+\DeclareFieldFormat{multipostnote}{#1}
+
+ $if(biblio-files)$
 \bibliography{$biblio-files$}
+ $endif$
+ $if(bibliography)$
+\bibliography{$bibliography$}
+ $endif$
 $endif$
-$endif$
+
 $if(listings)$
 \usepackage{listings}
 $endif$
+
 $if(lhs)$
 \lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
 $endif$
+
 $if(highlighting-macros)$
 $highlighting-macros$
 $endif$
+
 $if(verbatim-in-note)$
 \usepackage{fancyvrb}
 $endif$
+
 $if(tables)$
 \usepackage{longtable,booktabs}
 $endif$
+
 $if(graphics)$
 \usepackage{graphicx}
 % Redefine \includegraphics so that, unless explicit options are
@@ -91,43 +105,38 @@ $if(graphics)$
  \gdef\includegraphics{\@ifnextchar[{\Oldincludegraphics}{\Oldincludegraphics[width=\ScaleIfNeeded]}}%
 }%
 $endif$
-\ifxetex
-  \usepackage[setpagesize=false, % page size defined by xetex
-              unicode=false, % unicode breaks when used with xetex
-              xetex]{hyperref}
-\else
-  \usepackage[unicode=true]{hyperref}
-\fi
-% \hypersetup{breaklinks=true,
-%             bookmarks=true,
-%             pdfauthor={$author-meta$},
-%             pdftitle={$title-meta$},
-%             colorlinks=true,
-%             citecolor=$if(citecolor)$$citecolor$$else$blue$endif$,
-%             urlcolor=$if(urlcolor)$$urlcolor$$else$blue$endif$,
-%             linkcolor=$if(linkcolor)$$linkcolor$$else$magenta$endif$,
-%             pdfborder={0 0 0}}
-% \urlstyle{same}  % don't use monospace font for urls
+
+% \ifxetex
+%   \usepackage[setpagesize=false, % page size defined by xetex
+%               unicode=false, % unicode breaks when used with xetex
+%               xetex]{hyperref}
+% \else
+%   \usepackage[unicode=true]{hyperref}
+% \fi
+
 $if(links-as-notes)$
 % Make links footnotes instead of hotlinks:
 \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
 $endif$
+
 $if(strikeout)$
 \usepackage[normalem]{ulem}
 % avoid problems with \sout in headers with hyperref:
 \pdfstringdefDisableCommands{\renewcommand{\sout}{}}
 $endif$
-%% \setlength{\parindent}{0pt}
-%% \setlength{\parskip}{6pt plus 2pt minus 1pt}
+
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
+
 $if(numbersections)$
-\setcounter{secnumdepth}{5}
+\setcounter{secnumdepth}{3}
 $else$
 \setcounter{secnumdepth}{-1}
 $endif$
+
 $if(verbatim-in-note)$
 \VerbatimFootnotes % allows verbatim text in footnotes
 $endif$
+
 $if(lang)$
 \ifxetex
   \usepackage{polyglossia}
@@ -143,8 +152,10 @@ $endif$
 $if(subtitle)$
 \subtitle{$subtitle$}
 $endif$
+
 \author{$for(author)$$author$$sep$ \and $endfor$}
 \date{$date$}
+
 $for(header-includes)$
 $header-includes$
 $endfor$
@@ -166,11 +177,10 @@ $if(noparindent)$
 \setlength{\parskip}{0.5em}
 $endif$
 
-
 \begin{document}
-$if(title)$
-\maketitle
-$endif$
+
+$if(title)$\maketitle$endif$
+
 $if(abstract)$
 \begin{abstract}
 $abstract$
@@ -179,8 +189,8 @@ $endif$
 
 $for(include-before)$
 $include-before$
-
 $endfor$
+
 $if(toc)$
 {
 \hypersetup{linkcolor=black}
@@ -188,31 +198,32 @@ $if(toc)$
 \tableofcontents
 }
 $endif$
+
 $body$
 
 \begin{theendmatter}
 
 $if(natbib)$
-$if(biblio-files)$
-$if(biblio-title)$
-$if(book-class)$
+ $if(biblio-files)$
+  $if(biblio-title)$
+   $if(book-class)$
 \renewcommand\bibname{$biblio-title$}
-$else$
+   $else$
 \renewcommand\refname{$biblio-title$}
-$endif$
-$endif$
+   $endif$
+  $endif$
 \bibliography{$biblio-files$}
+ $endif$
+$endif$
 
-$endif$
-$endif$
 $if(biblatex)$
 \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
-
 $endif$
+
 $for(include-after)$
 $include-after$
-
 $endfor$
+
 \end{theendmatter}
 
 \end{document}
