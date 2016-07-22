@@ -276,7 +276,7 @@
         <group prefix=", " delimiter=", ">
           <group>
             <text variable="volume" font-style="italic"/>
-            <text variable="issue" prefix="(" suffix=")"/>
+            <text variable="issue" font-style="italic" prefix=" (" suffix=")"/>
           </group>
           <text variable="page"/>
         </group>
@@ -287,7 +287,7 @@
           <text variable="page"/>
         </group>
       </else-if>
-      <else-if type="book graphic motion_picture report song chapter paper-conference" match="any">
+      <else-if type="graphic motion_picture report song paper-conference" match="any">
         <group prefix=" (" suffix=")" delimiter=", ">
           <text macro="edition"/>
           <group>
@@ -378,20 +378,20 @@
       </else>
     </choose>
   </macro>
-  <citation et-al-min="6" et-al-use-first="1" et-al-subsequent-min="3" et-al-subsequent-use-first="1" disambiguate-add-year-suffix="true" disambiguate-add-names="true" disambiguate-add-givenname="true" collapse="year" givenname-disambiguation-rule="primary-name">
+  <citation et-al-min="4" et-al-use-first="1" et-al-subsequent-min="3" et-al-subsequent-use-first="1" disambiguate-add-year-suffix="true" disambiguate-add-names="true" disambiguate-add-givenname="true" givenname-disambiguation-rule="primary-name">
     <sort>
       <key macro="author"/>
       <key macro="issued-sort"/>
     </sort>
-    <layout delimiter="; " prefix="(" suffix=")">
+    <layout delimiter="; ">
       <group>
         <text macro="author-short" suffix=" "/>
-        <text macro="issued-year"/>
-        <text macro="citation-locator" prefix=" : "/>
+        <text macro="issued-year" prefix="(" suffix=")"/>
+        <text macro="citation-locator"/>
       </group>
     </layout>
   </citation>
-  <bibliography hanging-indent="true" et-al-min="8" et-al-use-first="6" et-al-use-last="true" subsequent-author-substitute="&#8212;&#8212;&#8212;" entry-spacing="0" line-spacing="2">
+  <bibliography hanging-indent="false" et-al-min="8" et-al-use-first="6" et-al-use-last="true" subsequent-author-substitute="&#8212;&#8212;&#8212;" entry-spacing="0" line-spacing="2">
     <sort>
       <key macro="author"/>
       <key macro="issued-sort" sort="ascending"/>
