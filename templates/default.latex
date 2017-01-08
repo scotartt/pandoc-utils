@@ -42,26 +42,29 @@ $endif$
 $if(geometry)$
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $endif$
-% never use natbib, it's fucking shit
-% $if(natbib)$
-% \usepackage{natbib}
-% \bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
-% $endif$
 
 $if(biblatex)$
-% \usepackage[backend=biber,sorting=nyt,style=philosophy-classic,firstinits=true,isbn=false,doi-false,url=false,eprint=false]{biblatex}
 \usepackage[backend=biber,sorting=nyt,citestyle=authoryear-comp, bibstyle=authoryear,firstinits=true,isbn=false,doi=false,url=false,eprint=false]{biblatex}
+% biblatex options
 \renewbibmacro{in:}{}
 \renewcommand*{\postnotedelim}{\addcolon\space}
 \DeclareFieldFormat{postnote}{#1}
 \DeclareFieldFormat{multipostnote}{#1}
-
  $if(biblio-files)$
 \bibliography{$biblio-files$}
  $endif$
  $if(bibliography)$
 \bibliography{$bibliography$}
  $endif$
+% this template adds this environment around 
+% the biblatex bibliograph (see end)
+\newenvironment{theendmatter}%
+{\SingleSpacing \setlength{\parskip}{0.5em} \setlength{\parindent}{0em}}%
+{\setlength{\parskip}{0em}}
+$else$
+\newenvironment{citeproc}%
+{\SingleSpacing \setlength{\parskip}{0.5em} \setlength{\parindent}{0em}}%
+{\setlength{\parskip}{0em}}
 $endif$
 
 $if(listings)$
@@ -108,7 +111,7 @@ $endif$
 
 \ifxetex
   \usepackage[setpagesize=false, % page size defined by xetex
-              unicode=false, % unicode breaks when used with xetex
+              unicode=false,     % unicode breaks when used with xetex
               xetex]{hyperref}
 \else
   \usepackage[unicode=true]{hyperref}
@@ -149,6 +152,7 @@ $endif$
 $if(title)$
 \title{$title$}
 $endif$
+
 $if(subtitle)$
 \subtitle{$subtitle$}
 $endif$
@@ -167,10 +171,6 @@ $endif$
 $if(onehalfspacing)$
 \OnehalfSpacing
 $endif$
-
-\newenvironment{theendmatter}%
-{\SingleSpacing \setlength{\parskip}{0.5em} \setlength{\parindent}{0em}}%
-{\setlength{\parskip}{0em}}
 
 $if(noparindent)$
 \setlength{\parindent}{0em}
@@ -200,29 +200,14 @@ $endif$
 
 $body$
 
-\begin{theendmatter}
-
-$if(natbib)$
- $if(biblio-files)$
-  $if(biblio-title)$
-   $if(book-class)$
-\renewcommand\bibname{$biblio-title$}
-   $else$
-\renewcommand\refname{$biblio-title$}
-   $endif$
-  $endif$
-\bibliography{$biblio-files$}
- $endif$
-$endif$
-
 $if(biblatex)$
+\begin{theendmatter}
 \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+\end{theendmatter}
 $endif$
 
 $for(include-after)$
 $include-after$
 $endfor$
-
-\end{theendmatter}
 
 \end{document}
