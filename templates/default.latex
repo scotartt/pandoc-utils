@@ -1,5 +1,8 @@
 \documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$lang$,$endif$$if(papersize)$$papersize$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
-% modified by scot
+% modified by scot 2017.09.10.1401
+%
+% this template assume the documentclass is memoir
+%
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{xcolor}
@@ -131,9 +134,14 @@ $endif$
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 
 $if(numbersections)$
-\setcounter{secnumdepth}{3}
+\pagestyle{plain}
+\setsecnumdepth{chapter}
+\maxsecnumdepth{chapter}
+\chapterstyle{dash}
 $else$
-\setcounter{secnumdepth}{-1}
+\pagestyle{plain}
+\setsecnumdepth{none}
+\maxsecnumdepth{none}
 $endif$
 
 $if(verbatim-in-note)$
@@ -154,7 +162,8 @@ $if(title)$
 $endif$
 
 $if(subtitle)$
-\subtitle{$subtitle$}
+\newcommand{\subtitle}{$subtitle$}
+\renewcommand{\maketitlehookb}{\centering\textsc{\subtitle}}
 $endif$
 
 \author{$for(author)$$author$$sep$ \and $endfor$}
@@ -178,14 +187,24 @@ $if(noparindent)$
 $endif$
 
 \begin{document}
+\frontmatter
+
+\begin{titlingpage}
+% \aliaspagestyle{titlingpage}{plain}
+\setlength{\droptitle}{30pt} % lower the title
 
 $if(title)$\maketitle$endif$
 
 $if(abstract)$
 \begin{abstract}
+\begin{center}
 $abstract$
+\end{center}
 \end{abstract}
 $endif$
+
+\end{titlingpage}
+
 
 $for(include-before)$
 $include-before$
@@ -194,11 +213,15 @@ $endfor$
 $if(toc)$
 {
 \setcounter{tocdepth}{$toc-depth$}
-\tableofcontents
+\tableofcontents*
 }
 $endif$
 
+\mainmatter
+
 $body$
+
+\backmatter
 
 $if(biblatex)$
 \begin{theendmatter}
