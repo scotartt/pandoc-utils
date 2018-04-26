@@ -113,12 +113,13 @@ $if(graphics)$
 $endif$
 
 \ifxetex
-  \usepackage[setpagesize=false, % page size defined by xetex
-              unicode=false,     % unicode breaks when used with xetex
-              xetex]{hyperref}
+ \usepackage[setpagesize=false, % page size defined by xetex
+             unicode=false,     % unicode breaks when used with xetex
+             xetex]{hyperref}
 \else
-  \usepackage[unicode=true]{hyperref}
+ \usepackage[unicode=true]{hyperref}
 \fi
+
 
 $if(links-as-notes)$
 % Make links footnotes instead of hotlinks:
@@ -187,6 +188,7 @@ $if(noparindent)$
 $endif$
 
 \begin{document}
+\begin{NoHyper}
 \frontmatter
 
 \begin{titlingpage}
@@ -233,4 +235,5 @@ $for(include-after)$
 $include-after$
 $endfor$
 
+\end{NoHyper}
 \end{document}
