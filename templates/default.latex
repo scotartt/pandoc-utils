@@ -138,12 +138,14 @@ $if(numbersections)$
 \pagestyle{plain}
 \setsecnumdepth{chapter}
 \maxsecnumdepth{chapter}
-\chapterstyle{dash}
 $else$
 \pagestyle{plain}
 \setsecnumdepth{none}
 \maxsecnumdepth{none}
 $endif$
+\chapterstyle{dash}
+\setsecheadstyle{\large\raggedright}
+\setsubsecheadstyle{\large\raggedright}
 
 $if(verbatim-in-note)$
 \VerbatimFootnotes % allows verbatim text in footnotes
