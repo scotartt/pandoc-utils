@@ -1,0 +1,241 @@
+\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$lang$,$endif$$if(papersize)$$papersize$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+% modified by scot 2017.09.10.1401
+%
+% this template assume the documentclass is memoir
+%
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} 
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% csquotes provides configuration for quotes e.g. '' "" or guillemots etc
+\usepackage[style=british]{csquotes}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[utf8]{inputenc}
+$if(euro)$
+  \usepackage{eurosym}
+$endif$
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+$if(mainfont)$
+  \setmainfont{$mainfont$}
+$endif$
+$if(sansfont)$
+    \setsansfont{$sansfont$}
+$endif$
+$if(monofont)$
+    \setmonofont[Mapping=tex-ansi]{$monofont$}
+$endif$
+$if(mathfont)$
+    \setmathfont(Digits,Latin,Greek){$mathfont$}
+$endif$
+\fi
+% use microtype if available
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+$if(geometry)$
+\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$endif$
+
+$if(biblatex)$
+\usepackage[backend=biber,sorting=nyt,citestyle=authoryear-comp, bibstyle=authoryear,firstinits=true,isbn=false,doi=false,url=false,eprint=false]{biblatex}
+% biblatex options
+\renewbibmacro{in:}{}
+\renewcommand*{\postnotedelim}{\addcolon\space}
+\DeclareFieldFormat{postnote}{#1}
+\DeclareFieldFormat{multipostnote}{#1}
+ $if(biblio-files)$
+\bibliography{$biblio-files$}
+ $endif$
+ $if(bibliography)$
+\bibliography{$bibliography$}
+ $endif$
+% this template adds this environment around 
+% the biblatex bibliograph (see end)
+\newenvironment{theendmatter}%
+{\SingleSpacing \setlength{\parskip}{0.5em} \setlength{\parindent}{0em}}%
+{\setlength{\parskip}{0em}}
+$else$
+\newenvironment{citeproc}%
+{\SingleSpacing \setlength{\parskip}{0.5em} \setlength{\parindent}{0em}}%
+{\setlength{\parskip}{0em}}
+$endif$
+
+$if(listings)$
+\usepackage{listings}
+$endif$
+
+$if(lhs)$
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+$endif$
+
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+
+$if(verbatim-in-note)$
+\usepackage{fancyvrb}
+$endif$
+
+$if(tables)$
+\usepackage{longtable,booktabs}
+$endif$
+
+$if(graphics)$
+\usepackage{graphicx}
+% Redefine \includegraphics so that, unless explicit options are
+% given, the image width will not exceed the width of the page.
+% Images get their normal width if they fit onto the page, but
+% are scaled down if they would overflow the margins.
+\makeatletter
+\def\ScaleIfNeeded{%
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+\let\Oldincludegraphics\includegraphics
+{%
+ \catcode`\@=11\relax%
+ \gdef\includegraphics{\@ifnextchar[{\Oldincludegraphics}{\Oldincludegraphics[width=\ScaleIfNeeded]}}%
+}%
+$endif$
+
+\ifxetex
+ \usepackage[setpagesize=false, % page size defined by xetex
+             unicode=false,     % unicode breaks when used with xetex
+             xetex]{hyperref}
+\else
+ \usepackage[unicode=true]{hyperref}
+\fi
+
+
+$if(links-as-notes)$
+% Make links footnotes instead of hotlinks:
+\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+$endif$
+
+$if(strikeout)$
+\usepackage[normalem]{ulem}
+% avoid problems with \sout in headers with hyperref:
+\pdfstringdefDisableCommands{\renewcommand{\sout}{}}
+$endif$
+
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+
+$if(numbersections)$
+\pagestyle{plain}
+\setsecnumdepth{chapter}
+\maxsecnumdepth{chapter}
+$else$
+\pagestyle{plain}
+\setsecnumdepth{none}
+\maxsecnumdepth{none}
+$endif$
+\chapterstyle{dash}
+\setsecheadstyle{\large\raggedright}
+\setsubsecheadstyle{\large\raggedright}
+
+$if(verbatim-in-note)$
+\VerbatimFootnotes % allows verbatim text in footnotes
+$endif$
+
+$if(lang)$
+\ifxetex
+  \usepackage{polyglossia}
+  \setmainlanguage{$mainlang$}
+\else
+  \usepackage[$lang$]{babel}
+\fi
+$endif$
+
+$if(title)$
+\title{$title$}
+$endif$
+
+$if(subtitle)$
+\newcommand{\subtitle}{$subtitle$}
+\renewcommand{\maketitlehookb}{\centering\textsc{\subtitle}}
+$endif$
+
+\author{$for(author)$$author$$sep$ \and $endfor$}
+\date{$date$}
+
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+$if(frenchspacing)$
+\frenchspacing
+$endif$
+
+$if(onehalfspacing)$
+\OnehalfSpacing
+$endif$
+
+$if(noparindent)$
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.5em}
+$endif$
+
+\begin{document}
+\begin{NoHyper}
+\frontmatter
+
+\begin{titlingpage}
+% \aliaspagestyle{titlingpage}{plain}
+\setlength{\droptitle}{30pt} % lower the title
+
+$if(title)$\maketitle$endif$
+
+$if(abstract)$
+\begin{abstract}
+\begin{center}
+$abstract$
+\end{center}
+\end{abstract}
+$endif$
+
+\end{titlingpage}
+
+
+$for(include-before)$
+$include-before$
+$endfor$
+
+$if(toc)$
+{
+\setcounter{tocdepth}{$toc-depth$}
+\tableofcontents*
+}
+$endif$
+
+\mainmatter
+
+$body$
+
+\backmatter
+
+$if(biblatex)$
+\begin{theendmatter}
+\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+\end{theendmatter}
+$endif$
+
+$for(include-after)$
+$include-after$
+$endfor$
+
+\end{NoHyper}
+\end{document}
