@@ -137,7 +137,7 @@
           <text variable="number" prefix="No. "/>
         </group>
       </if>
-      <else-if type="book graphic  motion_picture report song manuscript speech" match="any">
+      <else-if type="book graphic motion_picture report song manuscript speech" match="any">
         <text variable="title" font-style="italic" text-case="title"/>
       </else-if>
       <else>
