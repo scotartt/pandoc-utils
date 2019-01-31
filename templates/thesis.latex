@@ -11,11 +11,13 @@
 \usepackage{xcolor}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} 
 \usepackage{mathspec}
 \usepackage{xltxtra,xunicode}
 \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
 \newcommand{\euro}{€}
+\usepackage{uqtitle}
+% this replaces \maketitle macro with a custom one.
+
 
 $if(mainfont)$
   \setmainfont{$mainfont$}
@@ -41,8 +43,8 @@ $if(geometry)$
 $endif$
 
 
-\renewbibmacro{in:}{}
-\renewcommand*{\postnotedelim}{\addcolon\space}
+%  \renewbibmacro{in:}{}
+% \renewcommand*{\postnotedelim}{\addcolon\space}
 \newenvironment{citeproc}%
 {\SingleSpacing \setlength{\parskip}{0.5em} \setlength{\parindent}{0em}}%
 {\setlength{\parskip}{0em}}
@@ -71,17 +73,6 @@ $endif$
              unicode=false,     % unicode breaks hyperref when used with xetex
              xetex]{hyperref}
 
-$if(links-as-notes)$
-% Make links footnotes instead of hotlinks:
-\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
-$endif$
-
-$if(strikeout)$
-\usepackage[normalem]{ulem}
-% avoid problems with \sout in headers with hyperref:
-\pdfstringdefDisableCommands{\renewcommand{\sout}{}}
-$endif$
-
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 
 $if(numbersections)$
@@ -101,22 +92,9 @@ $if(verbatim-in-note)$
 \VerbatimFootnotes % allows verbatim text in footnotes
 $endif$
 
-$if(lang)$
-\ifxetex
-  \usepackage{polyglossia}
-  \setmainlanguage{$mainlang$}
-\else
-  \usepackage[$lang$]{babel}
-\fi
-$endif$
 
 $if(title)$
 \title{$title$}
-$endif$
-
-$if(subtitle)$
-\newcommand{\subtitle}{$subtitle$}
-\renewcommand{\maketitlehookb}{\centering\textsc{\subtitle}}
 $endif$
 
 \author{$for(author)$$author$$sep$ \and $endfor$}
@@ -136,7 +114,7 @@ $endif$
 
 $if(noparindent)$
 \setlength{\parindent}{0em}
-\setlength{\parskip}{0.5em}
+\setlength{\parskip}{0.75em}
 $endif$
 
 \begin{document}
@@ -145,17 +123,9 @@ $endif$
 
 \begin{titlingpage}
 % \aliaspagestyle{titlingpage}{plain}
-\setlength{\droptitle}{30pt} % lower the title
+% \setlength{\droptitle}{30pt} % lower the title
 
 $if(title)$\maketitle$endif$
-
-$if(abstract)$
-\begin{abstract}
-\begin{center}
-$abstract$
-\end{center}
-\end{abstract}
-$endif$
 
 \end{titlingpage}
 
@@ -164,12 +134,135 @@ $for(include-before)$
 $include-before$
 $endfor$
 
+
+\clearpage
+\section{Abstract}
+
+This is my thesis abstract. My thesis is very abstract. There is no figurative art in it at all. I am quite mad.
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\clearpage
+\section*{Declaration by Author}
+
+This thesis is composed of my original work, and contains no material
+previously published or written by another person except where due
+reference has been made in the text. I have clearly stated the
+contribution by others to jointly-authored works that I have included in
+my thesis.
+
+I have clearly stated the contribution of others to my thesis as a
+whole, including statistical assistance, survey design, data analysis,
+significant technical procedures, professional editorial advice,
+financial support and any other original research work used or reported
+in my thesis. The content of my thesis is the result of work I have
+carried out since the commencement of my higher degree by research
+candidature and does not include a substantial part of work that has
+been submitted to qualify for the award of any other degree or diploma
+in any university or other tertiary institution. I have clearly stated
+which parts of my thesis, if any, have been submitted to qualify for
+another award.
+
+I acknowledge that an electronic copy of my thesis must be lodged with
+the University Library and, subject to the policy and procedures of The
+University of Queensland, the thesis be made available for research and
+study in accordance with the Copyright Act 1968 unless a period of
+embargo has been approved by the Dean of the Graduate School.
+
+I acknowledge that copyright of all material contained in my thesis
+resides with the copyright holder(s) of that material. Where appropriate
+I have obtained copyright permission from the copyright holder to
+reproduce material in this thesis and have sought permission from
+co-authors for any jointly authored works included in the thesis.
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\clearpage
+\section*{Publications included in this thesis}
+
+No publications included.
+
+\section*{Submitted manuscripts included in this thesis}
+
+No manuscripts submitted for publication.
+
+\section*{Other publications during candidature}
+
+No other publications.
+
+\section*{Contributions by others to the thesis}
+
+No contributions by others.
+
+\clearpage
+\section*{Statement of parts of the thesis submitted to qualify for the award of another degree}
+
+No works submitted towards another degree have been included in this
+thesis.
+
+\clearpage
+\section*{Research involving human or animal subjects}
+
+
+No animal or human subjects were involved in this research.
+
+
+\clearpage
+\section*{Acknowledgements}
+
+Acknowledgements recognise those who have been instrumental in the
+completion of the project. Acknowledgements should include any
+professional editorial advice received including the name of the editor
+and a brief description of the service rendered.
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\clearpage
+\section*{Financial support}
+
+No financial support was provided to fund this research.
+
+\clearpage
+\section*{Keywords}
+
+livy, latin, historiography, history, rome, landscape, geography, literature.
+
+\section*{Australian and New Zealand Standard Research Classifications (ANZSRC)}
+
+ANZSRC code: 999999, Ancient History, 60\% \\
+ANZSRC code: 999999, Classics, 40\%
+
+\section*{Fields of Research (FoR) Classification}
+
+FoR code: 9999, things, 60\% \\
+FoR code: 9999, stuff, 40\%
+
+\clearpage
+
+\begin{vplace}[0.4]
+
+\begin{large}
+\textit{For Lisa, without whose love, encouragement, help, and understanding, this
+thesis would not have been possible.}
+\end{large}
+
+\end{vplace}
+
+\clearpage
 $if(toc)$
 {
 \setcounter{tocdepth}{$toc-depth$}
 \tableofcontents*
 }
 $endif$
+\clearpage
+
+
+
+\hypertarget{abbreviations}{%
+\chapter*{List of Abbreviations}\label{abbreviations}}
+\addcontentsline{toc}{chapter}{List of Abbreviations}
+\cleardoublepage
 
 \mainmatter
 
